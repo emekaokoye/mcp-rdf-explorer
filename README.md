@@ -167,6 +167,23 @@ You can ask questions like:
 - "find relationships of '{URI}'"
 - "what mode is RDF Explorer running?"
 
+## Development
+```
+# clone the repository
+git clone https://github.com/emekaokoye/mcp-rdf-explorer.git
+cd mcp-rdf-explorer
+
+# setup a virtual environment
+python -m venv venv
+source venv/bin/activate
+# windows: venv\Scripts\activate
+
+# install development dependencies
+pip install -r requirements.txt
+
+# run tests
+pytest test_rdf_explorer.py -v
+```
 
 ## License
 
