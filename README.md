@@ -99,7 +99,7 @@ The server exposes the following prompts:
 ## Configuration
 
 ### Installing on Claude Desktop
-Before starting make sure [Node.js](https://nodejs.org/) is installed on your desktop for `npx` to work.
+Before starting make sure [Claude Desktop](https://claude.ai/download) is installed.
 1. Go to: Settings > Developer > Edit Config
 
 2. Add the following to your `claude_desktop_config.json`:
