@@ -1,0 +1,5 @@
+fastmcp==0.4.1
+rdflib[sparql]
+requests
+feedparser
+tiktoken
