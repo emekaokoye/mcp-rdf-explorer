@@ -162,13 +162,12 @@ def get_feed_graph() -> str:
         logger.error(f"Error serializing feed graph: {str(e)}")
         raise
 
+
 @mcp.resource("schema://all")
 def get_schema() -> str:
     """Retrieve schema information (classes and properties) from the graph.
-
     Returns:
         str: A newline-separated string of schema elements (classes and properties).
-
     Raises:
         Exception: If the schema query fails.
     """
@@ -176,17 +175,26 @@ def get_schema() -> str:
     schema_query = """
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     PREFIX owl: <http://www.w3.org/2002/07/owl#>
-    SELECT DISTINCT ?class ?prop
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    SELECT DISTINCT ?entity ?type
     WHERE {
-        { ?class a rdfs:Class } UNION { ?class a owl:Class } UNION { ?prop a rdf:Property }
-    } LIMIT 100
+        { ?entity a rdfs:Class . BIND("rdfs:Class" as ?type) } UNION
+        { ?entity a owl:Class . BIND("owl:Class" as ?type) } UNION  
+        { ?entity a rdf:Property . BIND("rdf:Property" as ?type) } UNION
+        { ?entity a owl:ObjectProperty . BIND("owl:ObjectProperty" as ?type) } UNION
+        { ?entity a owl:DatatypeProperty . BIND("owl:DatatypeProperty" as ?type) } UNION
+        { ?entity a owl:AnnotationProperty . BIND("owl:AnnotationProperty" as ?type) }
+    } 
+    ORDER BY ?type ?entity
+    LIMIT 100
     """
     try:
         results = graph.query(schema_query)
-        return "\n".join(f"{row['class']} {row.get('prop', '')}" for row in results)
+        return "\n".join(f"{row['type']}: {row['entity']}" for row in results)
     except Exception as e:
         logger.error(f"Schema query error: {str(e)}")
         raise
+
 
 @mcp.resource("queries://{template_name}")
 def get_query_template(template_name: str) -> str:
