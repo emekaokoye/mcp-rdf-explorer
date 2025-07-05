@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/emekaokoye-mcp-rdf-explorer-badge.png)](https://mseep.ai/app/emekaokoye-mcp-rdf-explorer)
+
 # RDF Explorer v1.0.0 
 
 ## Overview
